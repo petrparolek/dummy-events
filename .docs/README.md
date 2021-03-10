@@ -5,9 +5,9 @@ Simple events for Nette.
 ## Content
 
 - [Usage - how to register](#usage)
-  - [Register events](#register-events)
-  - [Register lazy events](#register-lazy-events)
-  - [Fire events](#fire-events)
+	- [Register events](#register-events)
+	- [Register lazy events](#register-lazy-events)
+	- [Fire events](#fire-events)
 
 ## Usage
 
@@ -15,9 +15,9 @@ Simple events for Nette.
 
 Register in your config file (e.q. config.neon).
 
-```yaml
+```neon
 extensions:
-    events: Contributte\DummyEvents\DI\EventsExtension
+	events: Contributte\DummyEvents\DI\EventsExtension
 ```
 
 ### Register events
@@ -30,14 +30,14 @@ use Contributte\DummyEvents\EventsManager;
 
 class TestService implements EventsSubscriber 
 {
-    /**
-     * @param EventsManager $em
-     */
-    public function onEvents(EventsManager $em) {
-        $em->on('order.update', function($state) {
-            // Some logic..
-        });
-    }
+	/**
+	 * @param EventsManager $em
+	 */
+	public function onEvents(EventsManager $em) {
+		$em->on('order.update', function($state) {
+			// Some logic..
+		});
+	}
 }
 ```
 
@@ -45,16 +45,16 @@ class TestService implements EventsSubscriber
 
 Name tag as event name with prefix **event**.
 
-```yaml
+```neon
 services:
-    {class: TestService, tags: [event.order.update]}
+	{class: TestService, tags: [event.order.update]}
 ```
 
 Or use tag arrays with key name **events**.
 
-```yaml
+```neon
 services:
-    {class: TestService, tags: [events: [order.update]]}
+	{class: TestService, tags: [events: [order.update]]}
 ```
 
 This prevents usage of other tags.
@@ -68,20 +68,20 @@ use Contributte\DummyEvents\EventsManager;
 
 class TestSubscriber implements EventsSubscriber 
 {
-    
-    public function onEvents(EventsManager $em) {
-        $em->on('order.create', function($state) {
-            // Some logic..
-        });
-        
-        $em->on('order.update', function($state) {
-            // Some logic..
-        });
-        
-        $em->on('order.delete', function($state) {
-            // Some logic..
-        });
-    }
+	
+	public function onEvents(EventsManager $em) {
+		$em->on('order.create', function($state) {
+			// Some logic..
+		});
+
+		$em->on('order.update', function($state) {
+			// Some logic..
+		});
+
+		$em->on('order.delete', function($state) {
+			// Some logic..
+		});
+	}
 }
 ```
 
@@ -96,10 +96,9 @@ use Contributte\DummyEvents\EventsManager;
 public $em;
 
 public function save() {
-    // Some logic..
-    
-    // Fire order update events
-    $this->em->trigger('order.update', $order->state);
+	// Some logic..
+
+	// Fire order update events
+	$this->em->trigger('order.update', $order->state);
 }
 ```
-
